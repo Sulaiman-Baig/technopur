@@ -1,17 +1,97 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"> <!-- Set the character encoding for the document. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the page responsive. -->
     <title>Real-Time Chat</title> <!-- Title of the web page. -->
     <style>
-        ul { list-style-type: none; padding: 0; } /* Remove default list styling. */
-        li { padding: 8px; margin-bottom: 10px; background-color: #f4f4f4; } /* Style the chat messages. */
+        body {
+            font-family: Arial, sans-serif; /* Set a clean font for the application. */
+            margin: 0; /* Remove default margin. */
+            padding: 0; /* Remove default padding. */
+            display: flex; /* Use flexbox for layout. */
+            flex-direction: column; /* Stack children vertically. */
+            height: 100vh; /* Set full height of the viewport. */
+            background-color: #f0f0f0; /* Light background color for the body. */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading text. */
+            margin: 20px 0; /* Add margin above and below the heading. */
+        }
+
+        #messages {
+            flex: 1; /* Allow the message list to grow and fill available space. */
+            overflow-y: auto; /* Enable vertical scrolling if messages overflow. */
+            padding: 10px; /* Add padding inside the messages area. */
+            background-color: #fff; /* White background for the messages area. */
+            border: 1px solid #ccc; /* Light gray border around messages area. */
+            border-radius: 5px; /* Rounded corners for the messages area. */
+            margin: 0 10px; /* Add horizontal margin to messages area. */
+        }
+
+        ul {
+            list-style-type: none; /* Remove default list styling. */
+            padding: 0; /* Remove default padding. */
+            margin: 0; /* Remove default margin. */
+        }
+
+        li {
+            padding: 8px; /* Padding for each message item. */
+            margin-bottom: 10px; /* Space between messages. */
+            background-color: #e6e6e6; /* Light gray background for messages. */
+            border-radius: 4px; /* Slightly rounded corners for messages. */
+            word-wrap: break-word; /* Allow long words to break onto the next line. */
+        }
+
+        form {
+            display: flex; /* Use flexbox for the form layout. */
+            justify-content: center; /* Center items horizontally in the form. */
+            padding: 10px; /* Add padding around the form. */
+            background-color: #fff; /* White background for the form. */
+            border-top: 1px solid #ccc; /* Light gray border at the top of the form. */
+        }
+
+        input {
+            flex: 1; /* Allow input field to take up remaining space. */
+            padding: 10px; /* Padding inside the input field. */
+            border: 1px solid #ccc; /* Light gray border for the input field. */
+            border-radius: 4px; /* Rounded corners for the input field. */
+            margin-right: 10px; /* Space between input field and button. */
+        }
+
+        button {
+            padding: 10px 15px; /* Padding inside the button. */
+            background-color: #007bff; /* Blue background for the button. */
+            color: white; /* White text color for the button. */
+            border: none; /* Remove border for the button. */
+            border-radius: 4px; /* Rounded corners for the button. */
+            cursor: pointer; /* Change cursor to pointer on hover. */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover for the button. */
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em; /* Smaller heading size for mobile screens. */
+            }
+
+            input {
+                font-size: 14px; /* Increase font size for input on smaller screens. */
+            }
+
+            button {
+                font-size: 14px; /* Increase button font size on smaller screens. */
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Real-Time Chat</h1> <!-- Main heading for the chat application. -->
-    <ul id="messages"></ul> <!-- Unordered list to display chat messages. -->
+    <div id="messages"></div> <!-- Div to display chat messages. -->
     <form id="form" action=""> <!-- Form to send messages. -->
         <input id="input" autocomplete="off" placeholder="Type a message..." /> <!-- Input field for typing messages. -->
         <button>Send</button> <!-- Button to send the message. -->
@@ -24,7 +104,7 @@
         // Get the form and input elements from the HTML.
         const form = document.getElementById('form'); // Get the form element.
         const input = document.getElementById('input'); // Get the input element for typing messages.
-        const messages = document.getElementById('messages'); // Get the unordered list to display messages.
+        const messages = document.getElementById('messages'); // Get the messages div to display messages.
 
         // Listen for form submissions.
         form.addEventListener('submit', (e) => {
@@ -40,7 +120,7 @@
         socket.on('chat message', (msg) => {
             const item = document.createElement('li'); // Create a new list item for the message.
             item.textContent = msg; // Set the text content of the list item to the received message.
-            messages.appendChild(item); // Append the new message to the unordered list.
+            messages.appendChild(item); // Append the new message to the messages div.
             window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom to show the latest message.
         });
     </script>
