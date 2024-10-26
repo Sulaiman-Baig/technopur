@@ -22,18 +22,27 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
   console.log('A user connected'); // Log to the console when a user connects.
 
+  // Create a dummy username based on the Socket ID.
+  const username = `User_${socket.id.substring(0, 5)}`; // Generate a username using a portion of the socket ID.
+
+  // Notify other users about the new user joining the chat.
+  socket.broadcast.emit('chat message', { msg: `${username} has joined the chat.`, username: 'System' });
+
   // Listen for messages from the client.
-// This event is emitted when a message is sent by a connected user.
+  // This event is emitted when a message is sent by a connected user.
   socket.on('chat message', (msg) => {
-    // Broadcast the received message to all connected clients.
-// This allows all users to see the message sent by any user.
-    io.emit('chat message', msg);
+    // Broadcast the received message along with the username to all connected clients.
+    // This allows all users to see the message sent by any user along with the sender's name.
+    io.emit('chat message', { msg, username });
   });
 
   // Handle user disconnects.
-// This event is emitted when a user disconnects from the server.
+  // This event is emitted when a user disconnects from the server.
   socket.on('disconnect', () => {
-    console.log('User disconnected'); // Log to the console when a user disconnects.
+    console.log(`User disconnected: ${username}`); // Log to the console when a user disconnects.
+
+    // Notify other users about the user leaving the chat.
+    socket.broadcast.emit('chat message', { msg: `${username} has left the chat.`, username: 'System' });
   });
 });
 

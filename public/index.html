@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"> <!-- Set the character encoding for the document. -->
@@ -117,9 +117,9 @@
         });
 
         // Listen for incoming chat messages from the server.
-        socket.on('chat message', (msg) => {
+        socket.on('chat message', ({ msg, username }) => {
             const item = document.createElement('li'); // Create a new list item for the message.
-            item.textContent = msg; // Set the text content of the list item to the received message.
+            item.textContent = `${username}: ${msg}`; // Set the text content to include the username and message.
             messages.appendChild(item); // Append the new message to the messages div.
             window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom to show the latest message.
         });
