@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Chat</title>
+    <meta charset="UTF-8"> <!-- Set the character encoding for the document. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the page responsive. -->
+    <title>Real-Time Chat</title> <!-- Title of the web page. -->
     <style>
-        ul { list-style-type: none; padding: 0; }
-        li { padding: 8px; margin-bottom: 10px; background-color: #f4f4f4; }
+        ul { list-style-type: none; padding: 0; } /* Remove default list styling. */
+        li { padding: 8px; margin-bottom: 10px; background-color: #f4f4f4; } /* Style the chat messages. */
     </style>
 </head>
 <body>
-    <h1>Real-Time Chat</h1>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" placeholder="Type a message..." />
-        <button>Send</button>
+    <h1>Real-Time Chat</h1> <!-- Main heading for the chat application. -->
+    <ul id="messages"></ul> <!-- Unordered list to display chat messages. -->
+    <form id="form" action=""> <!-- Form to send messages. -->
+        <input id="input" autocomplete="off" placeholder="Type a message..." /> <!-- Input field for typing messages. -->
+        <button>Send</button> <!-- Button to send the message. -->
     </form>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script> <!-- Include the Socket.io client library. -->
     <script>
-        const socket = io(); // Initialize Socket.io
+        const socket = io(); // Initialize Socket.io client to connect to the server.
 
-        // Get the form and input elements.
-        const form = document.getElementById('form');
-        const input = document.getElementById('input');
-        const messages = document.getElementById('messages');
+        // Get the form and input elements from the HTML.
+        const form = document.getElementById('form'); // Get the form element.
+        const input = document.getElementById('input'); // Get the input element for typing messages.
+        const messages = document.getElementById('messages'); // Get the unordered list to display messages.
 
         // Listen for form submissions.
         form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent the form from submitting normally
-            if (input.value) {
+            e.preventDefault(); // Prevent the form from submitting normally.
+            if (input.value) { // Check if the input field is not empty.
                 // Emit the chat message to the server.
-                socket.emit('chat message', input.value);
-                input.value = ''; // Clear the input field
+                socket.emit('chat message', input.value); // Send the message to the server.
+                input.value = ''; // Clear the input field after sending the message.
             }
         });
 
-        // Listen for incoming chat messages.
+        // Listen for incoming chat messages from the server.
         socket.on('chat message', (msg) => {
-            const item = document.createElement('li');
-            item.textContent = msg; // Add the message to the list
-            messages.appendChild(item); // Append the message to the chat
-            window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom
+            const item = document.createElement('li'); // Create a new list item for the message.
+            item.textContent = msg; // Set the text content of the list item to the received message.
+            messages.appendChild(item); // Append the new message to the unordered list.
+            window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom to show the latest message.
         });
     </script>
 </body>
