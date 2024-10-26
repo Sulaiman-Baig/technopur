@@ -1,5 +1,5 @@
 
-# Real-Time User Management and Chat System
+# User Management, File Handling and Real-Time Chat
 
 This project consists of three key components: a User Management API, efficient file handling using Node.js streams, and a real-time chat server using Socket.io.
 
