@@ -39,9 +39,26 @@
         li {
             padding: 8px; /* Padding for each message item. */
             margin-bottom: 10px; /* Space between messages. */
-            background-color: #e6e6e6; /* Light gray background for messages. */
             border-radius: 4px; /* Slightly rounded corners for messages. */
             word-wrap: break-word; /* Allow long words to break onto the next line. */
+        }
+
+        /* Styles for user messages */
+        .user-message {
+            background-color: #e6f7ff; /* Light blue background for user messages. */
+            border-left: 5px solid #007bff; /* Blue left border to indicate user messages. */
+        }
+
+        /* Styles for system messages */
+        .system-message {
+            background-color: #fff3cd; /* Light yellow background for system messages. */
+            border-left: 5px solid #ffc107; /* Yellow left border to indicate system messages. */
+            font-style: italic; /* Italic style for system messages. */
+        }
+
+        .username {
+            font-weight: bold; /* Bold text for usernames. */
+            margin-right: 5px; /* Space between username and message. */
         }
 
         form {
@@ -119,7 +136,13 @@
         // Listen for incoming chat messages from the server.
         socket.on('chat message', ({ msg, username }) => {
             const item = document.createElement('li'); // Create a new list item for the message.
-            item.textContent = `${username}: ${msg}`; // Set the text content to include the username and message.
+            
+            // Determine message type (system or user) based on the username.
+            const isSystemMessage = username === 'System'; // Check if the message is a system message.
+            item.className = isSystemMessage ? 'system-message' : 'user-message'; // Set class based on message type.
+
+            // Set the text content to include the username and message.
+            item.innerHTML = `<span class="username">${username}:</span> ${msg}`; // Create a formatted message with username.
             messages.appendChild(item); // Append the new message to the messages div.
             window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom to show the latest message.
         });
